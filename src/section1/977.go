@@ -26,7 +26,6 @@ func sortedSquares(nums []int) []int {
 		}
 		if nums[left]*nums[left] > nums[right]*nums[right] {
 			ans[startIndex] = nums[left] * nums[left]
-			startIndex++
 			left--
 		} else {
 			ans[startIndex] = nums[right] * nums[right]
