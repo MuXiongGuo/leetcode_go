@@ -1,4 +1,4 @@
-package sword1
+package main
 
 type CQueue struct {
 	inStack, outStack []int
