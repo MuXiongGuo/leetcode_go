@@ -1,7 +1,5 @@
 package main
 
-import "fmt"
-
 // 6. 学习匿名字段
 //type data struct {
 //	*int
@@ -73,12 +71,12 @@ func main() {
 	//fmt.Println(d)
 
 	// 7. 学习结构体
-	b := base2{
-		con: "dddaaaa",
-		b1: base1{
-			content: "p",
-		},
-	}
-	b.b1.content = "daio"
-	fmt.Println(b)
+	//b := base2{
+	//	con: "dddaaaa",
+	//	b1: base1{
+	//		content: "p",
+	//	},
+	//}
+	//b.b1.content = "daio"
+	//fmt.Println(b)
 }
