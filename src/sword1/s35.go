@@ -57,7 +57,7 @@ func copyRandomList(head *Node) *Node {
 	return deepCopy(head)
 }
 
-// 3.常数空间 迭代法 难想到
+// 3.常数空间 迭代法 难想到 3次遍历 因为原来的要还原 总之可以看官方，同时 会出点问题
 func copyRandomList(head *Node) *Node {
 	if head == nil {
 		return nil
