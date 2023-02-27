@@ -7,7 +7,7 @@ type ListNode struct {
 
 // 虚拟头节点 迭代法
 func removeElements(head *ListNode, val int) *ListNode {
-	dummyNode := &ListNode{Next: head} // 不需要make
+	dummyNode := &ListNode{Next: head} // 不需要make 虚拟头节点
 	for p := dummyNode; p.Next != nil; {
 		if p.Next.Val == val {
 			p.Next = p.Next.Next
