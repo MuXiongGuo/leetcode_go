@@ -65,17 +65,22 @@ func copyRandomList(head *Node) *Node {
 	for node := head; node != nil; node = node.Next.Next {
 		node.Next = &Node{Val: node.Val, Next: node.Next}
 	}
+	headNew := head.Next
 	for node := head; node != nil; {
 		if node.Random != nil {
 			node.Next.Random = node.Random.Next
 		}
 		nextNode := node.Next.Next
 		if node.Next.Next != nil {
+			tmp := node.Next.Next
 			node.Next.Next = node.Next.Next.Next
+			node.Next = tmp
+		} else {
+			node.Next = nil
 		}
 		node = nextNode
 	}
-	headNew := head.Next
+
 	return headNew
 }
 
