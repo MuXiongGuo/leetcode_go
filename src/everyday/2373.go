@@ -36,7 +36,7 @@ func max(a, b int) int {
 	return b
 }
 
-// 官方
+// 官方  很简洁 学习下
 func largestLocal(grid [][]int) [][]int {
 	n := len(grid)
 	ans := make([][]int, n-2)
