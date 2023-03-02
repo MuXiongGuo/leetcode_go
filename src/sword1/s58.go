@@ -15,7 +15,6 @@ func reverseString(s []byte) {
 		low++
 		high--
 	}
-	return s
 }
 func main() {
 	s := "abcdefg"
