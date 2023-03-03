@@ -25,10 +25,45 @@ func minArray(numbers []int) int {
 }
 
 // 不能用固定第一个头节点 有破绽 要用两边的随时更新
+// 其实很简单 不要想的太复杂 就是mid与右端点判断即可
+func minArray(numbers []int) int {
+	low := 0
+	high := len(numbers) - 1
+	ans := 5001
+	for low <= high {
+		pivot := low + (high-low)/2
+		ans = min(ans, numbers[pivot])
+		if numbers[pivot] < numbers[high] {
+			high = pivot - 1
+		} else if numbers[pivot] > numbers[high] {
+			low = pivot + 1
+		} else {
+			high--
+		}
+	}
+	return ans
+}
 
 func min(a, b int) int {
 	if a < b {
 		return a
 	}
 	return b
+}
+
+// 官方这个更聪明
+func minArray(numbers []int) int {
+	low := 0
+	high := len(numbers) - 1
+	for low < high {
+		pivot := low + (high-low)/2
+		if numbers[pivot] < numbers[high] {
+			high = pivot
+		} else if numbers[pivot] > numbers[high] {
+			low = pivot + 1
+		} else {
+			high--
+		}
+	}
+	return numbers[low]
 }
