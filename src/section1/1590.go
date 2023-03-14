@@ -38,6 +38,8 @@ package main
 //}
 
 // 灵神的答案
+// 找一个最短子数组 满足此子数组和是c(余数)+k*p  x=c+k*p
+// 技巧为不断取余  (s-x+p)%p 保证取余结果一定正的 这道题不加这个也可以通过
 func minSubarray(nums []int, p int) int {
 	x := 0
 	for _, v := range nums {
