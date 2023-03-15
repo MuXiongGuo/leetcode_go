@@ -20,6 +20,13 @@ func (p pairSlice) Swap(i, j int) {
 }
 
 // 两种方法实现排序pair问题
+// 1.可以直接暴力 复杂度O(n^2)
+// 2.不sort 通过集合判断 很优秀 具体解析 以及时间复杂度分析可以看 官方!!!
+// O(m+n)  找到第一大集合并统计个数 为1 则枚举第2大里面 时间不会超过n
+// 若较多x  则判断x(x-1)/2 与 m关系 可直接判断
+// 就算是小于 也可以继续枚举 时间不会超过道路总数m 所以还是m+n  m+n包括统计邻接表的时间
+// 空间复杂分析: 邻接表O(n+m) 若用数组O(n^2)
+
 func maximalNetworkRank(n int, roads [][]int) int {
 	adList := make([][]int, n)
 	for i := range adList {
