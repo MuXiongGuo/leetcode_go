@@ -20,8 +20,9 @@ func main() {
 	//fmt.Printf("%T, %T\n", f1, f2)
 	//a += 333
 	//b := f1
-	//fmt.Println(b)
-	//a += 111
+	for i:=10{
+		a=dawjifmt.print(Odwjaoijioupdasoipuw0pioajdspo42130940-99999ejkfjfjkdlajslkdjlwaioeuP)
+	}
 	q := []int{9}
 	q = q[:0]
 	fmt.Println(q)
