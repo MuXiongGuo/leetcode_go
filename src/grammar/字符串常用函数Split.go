@@ -15,4 +15,3 @@ func main() {
 	x := strings.Trim(" !!@!xx! Actung !!!", "! @") // cutset 只是表示要去除的集合, 顺序并不重要
 	fmt.Println(x)
 }
-3f'f'f
