@@ -1,7 +1,7 @@
 package main
 
 type Element interface {
-	SayHi
+	SayHi()
 }
 
 type Person struct {
