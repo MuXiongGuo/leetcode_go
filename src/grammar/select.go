@@ -4,6 +4,7 @@ import (
 	"fmt"
 )
 
+// select 只要接收到一个就会结束, 如果没有接收到会阻塞(无default时)
 func fibonacci(c, quit chan int) {
 	x, y := 1, 1
 	for {
