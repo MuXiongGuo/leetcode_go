@@ -4,19 +4,21 @@ import (
 	"fmt"
 	"net"
 	"strings"
+	"time"
 )
 
 func HandleConn(conn net.Conn) {
 	defer conn.Close()
-
 	addr := conn.RemoteAddr().String()
 	buf := make([]byte, 2048)
 	for {
+		// 休息一下 再处理 模拟 大处理过程
 		n, err := conn.Read(buf)
 		if err != nil {
 			fmt.Println(err)
 			return
 		}
+		time.Sleep(time.Second * 5)
 		fmt.Printf("[%s]: %s\n", addr, string(buf[:n]))
 		// 正则表达式去除转义字符
 		if string(buf[:n-1]) == "exit" {
