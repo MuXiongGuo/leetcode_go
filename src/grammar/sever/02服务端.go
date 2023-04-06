@@ -18,8 +18,10 @@ func HandleConn(conn net.Conn) {
 			return
 		}
 		fmt.Printf("[%s]: %s\n", addr, string(buf[:n]))
+		// 正则表达式去除转义字符
 		if string(buf[:n-1]) == "exit" {
 			fmt.Println(addr, " exit")
+			return
 		}
 		// 转换成大写进行输出
 		conn.Write([]byte(strings.ToUpper(string(buf[:n]))))
