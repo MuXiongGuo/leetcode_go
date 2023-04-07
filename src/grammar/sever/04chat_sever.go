@@ -17,7 +17,7 @@ type Client struct {
 }
 
 var onlinemap = make(map[string]Client)
-var message = make(chan string)
+var message = make(chan string) // 换成main函数里局部的可以吗??? 一定要全局变量吗
 
 func HandleConn(conn net.Conn) {
 	defer conn.Close()
@@ -45,7 +45,7 @@ func MakeMsg(cli Client, msg string) (buf string) {
 }
 
 func WriteToClient(cli Client, conn net.Conn) {
-	for msg := range cli.C {
+	for msg := range cli.C { // range管道的用法???  (一直读管道内容 永远不会结束)
 		conn.Write([]byte(msg + "\n"))
 	}
 }
