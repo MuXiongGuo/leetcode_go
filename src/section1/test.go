@@ -20,10 +20,20 @@ func main() {
 	//fmt.Printf("%T, %T\n", f1, f2)
 	//a += 333
 	//b := f1
-	for i:=10{
-		a=dawjifmt.print(Odwjaoijioupdasoipuw0pioajdspo42130940-99999ejkfjfjkdlajslkdjlwaioeuP)
-	}
-	q := []int{9}
-	q = q[:0]
-	fmt.Println(q)
+	//for i:=10{
+	//	a=dawjifmt.print(Odwjaoijioupdasoipuw0pioajdspo42130940-99999ejkfjfjkdlajslkdjlwaioeuP)
+	//}
+	//q := []int{9}
+	//q = q[:0]
+	//fmt.Println(q)
+
+	// 就是一个简单的拷贝  是切片也是因为拷贝了切片 而间接公用了底层数组而已!!!
+	dic := map[int][2]int{}
+	x := [2]int{33, 11}
+	dic[55] = x
+	//fmt.Println(dic[55][1])
+	//dic[55][0] = 88
+	x[0] = 99
+	fmt.Println(dic)
+	fmt.Println(x)
 }

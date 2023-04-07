@@ -16,8 +16,13 @@ type Client struct {
 	Addr string      // 网络地址
 }
 
+type Message struct {
+	content string
+	who     string
+}
+
 var onlinemap = make(map[string]Client)
-var message = make(chan string) // 换成main函数里局部的可以吗??? 一定要全局变量吗
+var message = make(chan Message) // 换成main函数里局部的可以吗??? 一定要全局变量吗
 
 func HandleConn(conn net.Conn) {
 	defer conn.Close()
@@ -32,7 +37,7 @@ func HandleConn(conn net.Conn) {
 	go WriteToClient(cli, conn)
 
 	// 只告诉用户自己 他在哪里
-	cli.C <- MakeMsg(cli, "I am here\n")
+	cli.C <- string("I am here\n")
 
 	// 广播某个人在线
 	message <- MakeMsg(cli, "login\n")
@@ -43,10 +48,10 @@ func HandleConn(conn net.Conn) {
 		for {
 			n, _ := conn.Read(buf) // 没发送东西的时候会阻塞, 如果退出也会有返回值的
 			if n == 0 {            // 对方断开或者出问题了
-				msg := "exit:" + cliAddr // 如何使得这个进程结束的时候 把这个整个用户进程都给关了呢???TODO
+				msg := "exit" // 如何使得这个进程结束的时候 把这个整个用户进程都给关了呢???TODO
 				delete(onlinemap, cliAddr)
-				fmt.Println(msg)
-				message <- msg
+				fmt.Println(cliAddr + ": " + msg)
+				message <- MakeMsg(cli, msg)
 				return
 			}
 			// 添加功能 查询在线用户
@@ -67,9 +72,9 @@ func HandleConn(conn net.Conn) {
 	// 防止主进程结束
 	select {}
 }
-func MakeMsg(cli Client, msg string) (buf string) {
+func MakeMsg(cli Client, msg string) (buf Message) {
 	// 代码复用
-	buf = "[" + cli.Addr + "]" + cli.Name + ": " + msg
+	buf = Message{"[" + cli.Addr + "]" + cli.Name + ": " + msg, cli.Addr}
 	return
 }
 
@@ -84,7 +89,9 @@ func Manager() {
 	for {
 		msg := <-message // 没收到消息会阻塞
 		for _, cli := range onlinemap {
-			cli.C <- msg // 遍历map给每个成员发送刚才的消息
+			if cli.Addr != msg.who {
+				cli.C <- msg.content // 遍历map给每个成员发送刚才的消息
+			}
 		}
 	}
 }
