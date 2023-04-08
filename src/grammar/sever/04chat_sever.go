@@ -85,8 +85,8 @@ func HandleConn(conn net.Conn) {
 			message <- msg
 			return
 		case <-hasData: // 不用处理
-		case <-time.After(60 * time.Second): // 60s后超时
-			msg := MakeMsg(cli, "time out leave")
+		case <-time.After(10 * time.Second): // 60s后超时
+			msg := MakeMsg(cli, "time out leave \n")
 			delete(onlinemap, cliAddr)
 			fmt.Println(msg)
 			message <- msg

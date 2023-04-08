@@ -44,4 +44,11 @@ func main() {
 	case <-c:
 		fmt.Println("end")
 	}
+
+	// string
+	sNew := `ni hao wo shi
+hhahaha\ndddddd`
+	sNew2 := "ni hao wo shi\\nhhadaha"
+	fmt.Println(sNew)
+	fmt.Println(sNew2)
 }
