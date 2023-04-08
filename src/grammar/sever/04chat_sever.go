@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 	"net"
+	"strings"
+	"time"
 )
 
 // 聊天室本质就是给在的client转发消息
@@ -37,16 +39,18 @@ func HandleConn(conn net.Conn) {
 	// 广播某个人在线
 	message <- MakeMsg(cli, "login\n")
 
+	// 对方是否主动退出
+	isQuit := make(chan bool)
+	// 对方是否主动发送消息(超时太久的可以踢掉他)
+	hasData := make(chan bool)
+
 	// 新开一个协程用于用户发言以及离线处理
 	go func() {
 		buf := make([]byte, 2048)
 		for {
 			n, _ := conn.Read(buf) // 没发送东西的时候会阻塞, 如果退出也会有返回值的
 			if n == 0 {            // 对方断开或者出问题了
-				msg := "exit:" + cliAddr // 如何使得这个进程结束的时候 把这个整个用户进程都给关了呢???TODO
-				delete(onlinemap, cliAddr)
-				fmt.Println(msg)
-				message <- msg
+				isQuit <- true
 				return
 			}
 			// 添加功能 查询在线用户
@@ -57,15 +61,38 @@ func HandleConn(conn net.Conn) {
 					msg = tmp.Addr + ":" + tmp.Name + "\n"
 					conn.Write([]byte(msg))
 				}
+			} else if len(msg) >= 8 && msg[:6] == "rename" {
+				// 添加重命名功能 eg:rename|mike
+				name := strings.Split(msg, "|")[1]
+				cli.Name = name
+				onlinemap[cliAddr] = cli
+				conn.Write([]byte("rename ok\n"))
 			} else {
 				// 转发消息
 				message <- MakeMsg(cli, string(buf[:n]))
 			}
+			hasData <- true // 代表用户发送过数据
 		}
 	}()
 
 	// 防止主进程结束
-	select {}
+	for {
+		select {
+		case <-isQuit:
+			msg := MakeMsg(cli, "exit")
+			delete(onlinemap, cliAddr)
+			fmt.Println(msg)
+			message <- msg
+			return
+		case <-hasData: // 不用处理
+		case <-time.After(60 * time.Second): // 60s后超时
+			msg := MakeMsg(cli, "time out leave")
+			delete(onlinemap, cliAddr)
+			fmt.Println(msg)
+			message <- msg
+			return
+		}
+	}
 }
 func MakeMsg(cli Client, msg string) (buf string) {
 	// 代码复用

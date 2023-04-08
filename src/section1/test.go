@@ -36,4 +36,12 @@ func main() {
 	x[0] = 99
 	fmt.Println(dic)
 	fmt.Println(x)
+
+	//
+	c := make(chan int, 2)
+	c <- 5
+	select {
+	case <-c:
+		fmt.Println("end")
+	}
 }
