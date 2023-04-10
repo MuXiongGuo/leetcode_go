@@ -34,31 +34,40 @@ func HttpGet(url string) (result string, err error) {
 
 func Dowork(start, end int) {
 	fmt.Printf("getting the content of %d to %d\n", start, end)
+	page := make(chan int)
 	for i := start; i <= end; i++ {
-		// 1.爬取目标
-		url := "https://tieba.baidu.com/f?kw=%E7%BB%9D%E5%9C%B0%E6%B1%82%E7%94%9F&ie=utf-8&pn=" +
-			strconv.Itoa((i-1)*50)
-		fmt.Println("crawling page " + strconv.Itoa(i))
-		// 2.爬取
-		result, err := HttpGet(url)
-		if err != nil && err.Error() != "EOF" {
-			fmt.Println(err)
-			continue
-		}
-		// 3.把内容写入到文件
-		fileName := strconv.Itoa(i) + ".html"
-		f, err := os.Create(fileName)
-		defer f.Close()
-		if err != nil {
-			fmt.Println("os.Create err: ", err)
-			return
-		}
-		f.WriteString(result) // 写入内容
+		go SpiderPage(i, page)
+	}
+	// 注意不能让主程序提前结束
+	for i := start; i <= end; i++ {
+		fmt.Printf("page %d complete \n", <-page)
 	}
 }
 
+func SpiderPage(i int, page chan int) {
+	// 1.爬取目标
+	url := "https://tieba.baidu.com/f?kw=%E7%BB%9D%E5%9C%B0%E6%B1%82%E7%94%9F&ie=utf-8&pn=" +
+		strconv.Itoa((i-1)*50)
+	fmt.Println("crawling page " + strconv.Itoa(i))
+	// 2.爬取
+	result, err := HttpGet(url)
+	if err != nil && err.Error() != "EOF" {
+		fmt.Println(err)
+		return
+	}
+	// 3.把内容写入到文件
+	fileName := strconv.Itoa(i) + ".html"
+	f, err := os.Create(fileName)
+	defer f.Close()
+	if err != nil {
+		fmt.Println("os.Create err: ", err)
+		return
+	}
+	f.WriteString(result) // 写入内容
+	page <- i
+}
 func main() {
-	//runtime.GOMAXPROCS(4)
+	//runtime.GOMAXPROCS(1)
 
 	var start, end int
 	fmt.Printf("input start page(>=1): ")
