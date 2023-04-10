@@ -6,7 +6,8 @@ import (
 )
 
 func main() {
-	regexp1, _ := regexp.Compile("abcdefghijklmnopqrstuvwxyz")
-	x := "dwoauo2331sa\n"
-	fmt.Println(regexp1.FindString(x))
+	re, _ := regexp.Compile("w.*w")
+	x := "wdawjmygamedw\"ajio?p"
+	z := re.FindString(x)
+	fmt.Println(z)
 }
