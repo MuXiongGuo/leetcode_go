@@ -71,7 +71,7 @@ func HttpGet(url string) (result string, err error) { // 读url里面的body内�
 	return
 }
 
-func SpiderPage(i int) {
+func SpiderPage(i int, page chan int) {
 	url := "https://duanzixing.com/page/" + strconv.Itoa(i) + "/"
 	fmt.Println("Crawling page " + strconv.Itoa(i) + ":" + url)
 
@@ -103,13 +103,18 @@ func SpiderPage(i int) {
 		f.WriteString("title" + strconv.Itoa(i) + ": " + titlePage[i] + "\n")
 		f.WriteString("content" + strconv.Itoa(i) + ": " + contentPage[i] + "\n\n")
 	}
+	page <- i
 }
 
 func DoWork(start, end int) {
 	fmt.Printf("starting get page %d to page %d\n", start, end)
+	page := make(chan int, 1)
 	for i := start; i <= end; i++ {
 		// 爬主页面
-		SpiderPage(i)
+		go SpiderPage(i, page)
+	}
+	for i := start; i <= end; i++ {
+		fmt.Println("page " + strconv.Itoa(<-page) + "complete")
 	}
 }
 
