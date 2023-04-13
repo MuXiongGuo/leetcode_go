@@ -27,7 +27,7 @@ func main() {
 	//q = q[:0]
 	//fmt.Println(q)
 
-	// 就是一个简单的拷贝  是切片也是因为拷贝了切片 而间接公用了底层数组而已!!!
+	// 就是一个简单的拷贝  是切片也是因为拷贝了切片 而间接公用了底层数组而已!!!  字典的修改
 	dic := map[int][2]int{}
 	x := [2]int{33, 11}
 	dic[55] = x
@@ -36,6 +36,12 @@ func main() {
 	x[0] = 99
 	fmt.Println(dic)
 	fmt.Println(x)
+	dic2 := map[int][]int{}
+	x2 := []int{22, 44}
+	dic2[18] = x2
+	dic2[18][0] = 88
+	x2[1] = 444
+	fmt.Println(dic2)
 
 	//
 	c := make(chan int, 2)
