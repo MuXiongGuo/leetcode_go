@@ -6,15 +6,25 @@ import (
 	"reflect"
 )
 
-type S struct{}
-type T struct {
-	S
+type Sbig struct{}
+type Tsmall struct {
+	age  int
+	work string
 }
 
-func (S) sVal()  {}
-func (*S) sPtr() {}
-func (T) tVal()  {}
-func (*T) tPtr() {}
+//	func (s Sbig) sVal() {
+//		fmt.Println("hello")
+//	}
+//
+//	func (s *Sbig) sPtr() {
+//		fmt.Println("hello")
+//	}
+func (t Tsmall) TVal() {
+	fmt.Println("hello")
+}
+func (t *Tsmall) TPtr() {
+	fmt.Println("hello")
+}
 
 func methodSet(a interface{}) {
 	t := reflect.TypeOf(a)
@@ -25,7 +35,7 @@ func methodSet(a interface{}) {
 }
 
 func main() {
-	var t T
+	var t Tsmall = Tsmall{age: 1, work: "2"}
 	methodSet(t)
 	println("------")
 	methodSet(&t)
