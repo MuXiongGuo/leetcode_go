@@ -19,10 +19,10 @@ type Tsmall struct {
 //	func (s *Sbig) sPtr() {
 //		fmt.Println("hello")
 //	}
-func (t Tsmall) TVal() {
+func (t Tsmall) tVal() {
 	fmt.Println("hello")
 }
-func (t *Tsmall) TPtr() {
+func (t *Tsmall) tPtr() {
 	fmt.Println("hello")
 }
 
@@ -36,6 +36,7 @@ func methodSet(a interface{}) {
 
 func main() {
 	var t Tsmall = Tsmall{age: 1, work: "2"}
+	t.tVal()
 	methodSet(t)
 	println("------")
 	methodSet(&t)
