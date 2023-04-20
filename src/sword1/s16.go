@@ -18,7 +18,7 @@ func myPow(x float64, n int) float64 {
 	return res
 }
 
-// 数学  O(lgn)  以2为底n的对数
+// 数学  O(lgn) 以2为底n的对数
 func myPow2(x float64, n int) float64 {
 	if n == 0 {
 		return 1
