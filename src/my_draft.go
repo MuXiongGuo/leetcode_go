@@ -77,3 +77,6 @@ type myer interface {
 //	*h = (*h)[:len(*h)-1]
 //	return res
 //}
+
+//https://blog.csdn.net/qq_42696069/article/details/129397728
+//https://blog.csdn.net/qq_42696069/article/details/129397728
