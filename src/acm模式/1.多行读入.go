@@ -9,7 +9,12 @@ import (
 	"strings"
 )
 
+func InputRowRetInt() []int {
+
+}
+
 func main() {
+	// 读两行 读多行用for 即可
 	sc := bufio.NewScanner(os.Stdin)
 	list1 := []int{}
 	sc.Scan()
@@ -27,6 +32,7 @@ func main() {
 	sort.Slice(list1, func(i, j int) bool {
 		return list1[i] < list1[j]
 	})
+	// 输出格式
 	for _, el := range list1 {
 		s := strconv.Itoa(el)
 		fmt.Printf(s)
