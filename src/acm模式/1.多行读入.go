@@ -9,33 +9,45 @@ import (
 	"strings"
 )
 
-func InputRowRetInt() []int {
+var sc = bufio.NewScanner(os.Stdin)
 
+func InputRowRetInt() []int {
+	var intS []int
+	sc.Scan()
+	strS := strings.Split(sc.Text(), " ")
+	for _, el := range strS {
+		val, _ := strconv.Atoi(el)
+		intS = append(intS, val)
+	}
+	return intS
+}
+
+func OutPutIntSlice(s []int) {
+	// 空格间隔 有结尾空格
+	//for _, el := range s {
+	//	val := strconv.Itoa(el)
+	//	fmt.Printf(val)
+	//	fmt.Printf(" ")
+	//}
+
+	// 无结尾空格
+	for i := 0; i < len(s); i++ {
+		val := strconv.Itoa(s[i])
+		fmt.Printf(val)
+		if i != len(s)-1 {
+			fmt.Printf(" ")
+		}
+	}
 }
 
 func main() {
 	// 读两行 读多行用for 即可
-	sc := bufio.NewScanner(os.Stdin)
-	list1 := []int{}
-	sc.Scan()
-	strs1 := strings.Split(sc.Text(), " ")
-	for _, el := range strs1 {
-		val, _ := strconv.Atoi(el)
-		list1 = append(list1, val)
-	}
-	sc.Scan()
-	strs2 := strings.Split(sc.Text(), " ")
-	for _, el := range strs2 {
-		val, _ := strconv.Atoi(el)
-		list1 = append(list1, val)
-	}
-	sort.Slice(list1, func(i, j int) bool {
-		return list1[i] < list1[j]
+	s1 := InputRowRetInt()
+	s2 := InputRowRetInt()
+	s1 = append(s1, s2...)
+	sort.Slice(s1, func(i, j int) bool {
+		return s1[i] < s1[j]
 	})
 	// 输出格式
-	for _, el := range list1 {
-		s := strconv.Itoa(el)
-		fmt.Printf(s)
-		fmt.Printf(" ")
-	}
+	OutPutIntSlice(s1)
 }
