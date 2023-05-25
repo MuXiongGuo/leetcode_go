@@ -22,8 +22,8 @@ func InputRowRetInt() []int {
 }
 
 type List struct {
-	val  int
-	next *List
+	Val  int
+	Next *List
 }
 
 func CreateList(s []int) *List {
@@ -31,22 +31,22 @@ func CreateList(s []int) *List {
 		return nil
 	}
 	ret := &List{
-		val:  s[0],
-		next: nil,
+		Val:  s[0],
+		Next: nil,
 	}
 	p := ret
 	for i := 1; i < len(s); i++ {
-		p.next = &List{val: s[i], next: nil}
-		p = p.next
+		p.Next = &List{Val: s[i], Next: nil}
+		p = p.Next
 	}
 	return ret
 }
 
 func OutPutList(p *List) {
 	for p != nil {
-		fmt.Print(p.val)
+		fmt.Print(p.Val)
 		fmt.Printf(" ")
-		p = p.next
+		p = p.Next
 	}
 }
 
@@ -60,27 +60,27 @@ func main() {
 	var p3 = &List{}
 	head := p3
 	for p1 != nil && p2 != nil {
-		p3.next = &List{}
-		if p1.val < p2.val {
-			p3.next.val = p1.val
-			p1 = p1.next
+		p3.Next = &List{}
+		if p1.Val < p2.Val {
+			p3.Next.Val = p1.Val
+			p1 = p1.Next
 		} else {
-			p3.next.val = p2.val
-			p2 = p2.next
+			p3.Next.Val = p2.Val
+			p2 = p2.Next
 		}
-		p3 = p3.next
+		p3 = p3.Next
 	}
 	for p1 != nil {
-		p3.next = &List{}
-		p3.next.val = p1.val
-		p1 = p1.next
-		p3 = p3.next
+		p3.Next = &List{}
+		p3.Next.Val = p1.Val
+		p1 = p1.Next
+		p3 = p3.Next
 	}
 	for p2 != nil {
-		p3.next = &List{}
-		p3.next.val = p2.val
-		p2 = p2.next
-		p3 = p3.next
+		p3.Next = &List{}
+		p3.Next.Val = p2.Val
+		p2 = p2.Next
+		p3 = p3.Next
 	}
-	OutPutList(head.next)
+	OutPutList(head.Next)
 }
