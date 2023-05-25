@@ -3,8 +3,8 @@ package main
 import "fmt"
 
 type List struct {
-	val  int
-	next *List
+	Val  int
+	Next *List
 }
 
 func CreateList(s []int) *List {
@@ -12,22 +12,22 @@ func CreateList(s []int) *List {
 		return nil
 	}
 	ret := &List{
-		val:  s[0],
-		next: nil,
+		Val:  s[0],
+		Next: nil,
 	}
 	p := ret
 	for i := 1; i < len(s); i++ {
-		p.next = &List{val: s[i], next: nil}
-		p = p.next
+		p.Next = &List{Val: s[i], Next: nil}
+		p = p.Next
 	}
 	return ret
 }
 
 func OutPutList(p *List) {
 	for p != nil {
-		fmt.Print(p.val)
+		fmt.Print(p.Val)
 		fmt.Printf(" ")
-		p = p.next
+		p = p.Next
 	}
 }
 

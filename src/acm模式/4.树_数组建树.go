@@ -3,9 +3,9 @@ package main
 import "fmt"
 
 type TreeNode struct {
-	val   int
-	left  *TreeNode
-	right *TreeNode
+	Val   int
+	Left  *TreeNode
+	Right *TreeNode
 }
 
 func BuildTree(s []int) *TreeNode {
@@ -19,9 +19,9 @@ func BuildTree(s []int) *TreeNode {
 		var node *TreeNode
 		if el != -1 {
 			node = &TreeNode{
-				val:   el,
-				left:  nil,
-				right: nil,
+				Val:   el,
+				Left:  nil,
+				Right: nil,
 			}
 		}
 		vTree[i] = node
@@ -29,8 +29,8 @@ func BuildTree(s []int) *TreeNode {
 	root = vTree[0]
 	for i := 0; 2*i+2 < len(s); i++ {
 		if vTree[i] != nil {
-			vTree[i].left = vTree[2*i+1]
-			vTree[i].right = vTree[2*i+2]
+			vTree[i].Left = vTree[2*i+1]
+			vTree[i].Right = vTree[2*i+2]
 		}
 	}
 	return root
@@ -38,27 +38,27 @@ func BuildTree(s []int) *TreeNode {
 
 func PreorderOutPutTree(p *TreeNode) {
 	if p != nil {
-		fmt.Print(p.val)
+		fmt.Print(p.Val)
 		fmt.Printf(" ")
-		PreorderOutPutTree(p.left)
-		PreorderOutPutTree(p.right)
+		PreorderOutPutTree(p.Left)
+		PreorderOutPutTree(p.Right)
 	}
 }
 
 func InorderOutPutTree(p *TreeNode) {
 	if p != nil {
-		InorderOutPutTree(p.left)
-		fmt.Print(p.val)
+		InorderOutPutTree(p.Left)
+		fmt.Print(p.Val)
 		fmt.Printf(" ")
-		InorderOutPutTree(p.right)
+		InorderOutPutTree(p.Right)
 	}
 }
 
 func PostorderOutPutTree(p *TreeNode) {
 	if p != nil {
-		PostorderOutPutTree(p.left)
-		PostorderOutPutTree(p.right)
-		fmt.Print(p.val)
+		PostorderOutPutTree(p.Left)
+		PostorderOutPutTree(p.Right)
+		fmt.Print(p.Val)
 		fmt.Printf(" ")
 	}
 }
@@ -66,6 +66,6 @@ func PostorderOutPutTree(p *TreeNode) {
 func main() {
 	p := BuildTree([]int{1, 2, 3, 4, 5, 6, -1}) // 要满一层才可以!!!
 	PreorderOutPutTree(p)
-	InorderOutPutTree(p)
-	PostorderOutPutTree(p)
+	//InorderOutPutTree(p)
+	//PostorderOutPutTree(p)
 }
