@@ -40,11 +40,34 @@ func main() {
 	nextPermutation([]int{5, 4, 7, 5, 3, 2})
 }
 
-//func main() {
-//	n := []int{1, 4, 5, 2, 3, 5, 9}
-//	tmp := n[2:]
-//	sort.Slice(tmp, func(i, j int) bool {
-//		return tmp[i] < tmp[j]
-//	})
-//	fmt.Println(n)
-//}
+//	func main() {
+//		n := []int{1, 4, 5, 2, 3, 5, 9}
+//		tmp := n[2:]
+//		sort.Slice(tmp, func(i, j int) bool {
+//			return tmp[i] < tmp[j]
+//		})
+//		fmt.Println(n)
+//	}
+//
+// 官方 聪明！！ 其实是翻转 reverse 不是排序 因为是逆序的节约时间
+func nextPermutation(nums []int) {
+	n := len(nums)
+	i := n - 2
+	for i >= 0 && nums[i] >= nums[i+1] {
+		i--
+	}
+	if i >= 0 {
+		j := n - 1
+		for j >= 0 && nums[i] >= nums[j] {
+			j--
+		}
+		nums[i], nums[j] = nums[j], nums[i]
+	}
+	reverse(nums[i+1:])
+}
+
+func reverse(a []int) {
+	for i, n := 0, len(a); i < n/2; i++ {
+		a[i], a[n-1-i] = a[n-1-i], a[i]
+	}
+}
