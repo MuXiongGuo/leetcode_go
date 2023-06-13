@@ -11,7 +11,7 @@ func numSubarrayProductLessThanK(nums []int, k int) int {
 			left++
 			cnt--
 		}
-		ans += cur
+		ans += cnt
 	}
 	return ans
 }
