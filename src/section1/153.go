@@ -36,7 +36,7 @@ func findMin(nums []int) int {
 func findMin(nums []int) int {
 	low, high := 0, len(nums)-1
 	for low < high {
-		pivot := low + (high-low)/2
+		pivot := low + (high-low)/2 // 防止溢出
 		if nums[pivot] < nums[high] {
 			high = pivot
 		} else {
