@@ -36,7 +36,7 @@ func reorderList(head *ListNode) {
 // 1. 找到中点 2. 反转后半部分 3. 合并两个链表
 func middleNode(head *ListNode) *ListNode {
 	slow, fast := head, head
-	for fast.Next != nil && fast.Next.Next != nil {
+	for fast != nil && fast.Next != nil {
 		slow = slow.Next
 		fast = fast.Next.Next
 	}
