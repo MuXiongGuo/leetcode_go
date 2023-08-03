@@ -13,9 +13,20 @@ func removeComments(source []string) []string {
 	}
 	var allIndex []pair
 	for i := 0; i < len(all.String())-1; i++ {
-		if all.String()[i:i+2] == "//" || all.String()[i:i+2] == "/*" {
+		if all.String()[i:i+2] == "//" {
 			tmp := pair{a: i}
-
+			for j := i + 2; j < len(all.String())-1; j++ {
+				if all.String()[j:j+2] == "\n" {
+					tmp.b = j + 1
+				}
+			}
+		} else if all.String()[i:i+2] == "/*" {
+			tmp := pair{a: i}
+			for j := i + 2; j < len(all.String())-1; j++ {
+				if all.String()[j:j+2] == "\n" {
+					tmp.b = j + 1
+				}
+			}
 		}
 	}
 }
