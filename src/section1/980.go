@@ -4,6 +4,8 @@ import (
 	"fmt"
 )
 
+// 可以加一个空间优化，之前走到过的地方 不增加的话那么就在这个点上比较为false 之后走的时候 遇到false的直接结束即可
+// 注意！！！不是简单的给每个节点标记false true  而是将这条路径 压缩成二进制 同样的路径的情况来判断能否通过
 func uniquePathsIII(grid [][]int) int {
 	ans := 0
 	cntZero := 0
