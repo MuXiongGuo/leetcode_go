@@ -9,4 +9,5 @@ func subtractProductAndSum(n int) int {
 		n /= 10
 	}
 	return s0 - s1
+
 }
