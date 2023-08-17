@@ -23,7 +23,7 @@ func subsets(nums []int) [][]int {
 }
 
 // 列举所有状态 每个状态花费O(n)时间去构造
-func subsets(nums []int) (ans [][]int) {
+func subsets2(nums []int) (ans [][]int) {
 	n := len(nums)
 	for mask := 0; mask < 1<<n; mask++ {
 		set := []int{}
