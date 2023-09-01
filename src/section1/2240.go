@@ -26,5 +26,7 @@ func waysToBuyPensPencils(total int, cost1 int, cost2 int) int64 {
 	for i := 0; i*cost1 <= total; i++ {
 		ans += (total-i*cost1)/cost2 + 1
 	}
+
 	return int64(ans)
+
 }
