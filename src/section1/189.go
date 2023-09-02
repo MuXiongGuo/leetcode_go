@@ -61,6 +61,7 @@ func reverseSlice(s []int) {
 }
 
 // 若不用翻转3次的方法，那么可得到规律  旧的在位置i处的元素 应该 放在(i+k) mod n 处这样有这个公式就可以就地替换了
+// 不好理解
 func rotate4(nums []int, k int) {
 	n := len(nums)
 	k %= n
