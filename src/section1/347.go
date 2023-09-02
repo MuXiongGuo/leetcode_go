@@ -2,7 +2,9 @@ package main
 
 import (
 	"container/heap"
+	"math/rand"
 	"sort"
+	"time"
 )
 
 // 就算没有order map  也可以用unorder map再排序一样的效果
@@ -90,4 +92,88 @@ func (h *hp) Pop() interface{} {
 	ans := (*h)[len(*h)-1]
 	*h = (*h)[:len(*h)-1]
 	return ans
+}
+
+// 前k高频模板
+func topKFrequent(nums []int, k int) []int {
+	occurrences := map[int]int{}
+	for _, num := range nums {
+		occurrences[num]++
+	}
+	values := [][]int{}
+	for key, value := range occurrences {
+		values = append(values, []int{key, value})
+	}
+	ret := make([]int, k)
+	qsort(values, 0, len(values)-1, ret, 0, k)
+	return ret
+}
+
+func qsort(values [][]int, start, end int, ret []int, retIndex, k int) {
+	rand.Seed(time.Now().UnixNano())
+	picked := rand.Int()%(end-start+1) + start
+	values[picked], values[start] = values[start], values[picked]
+
+	pivot := values[start][1]
+	index := start
+
+	for i := start + 1; i <= end; i++ {
+		if values[i][1] >= pivot {
+			values[index+1], values[i] = values[i], values[index+1]
+			index++
+		}
+	}
+	values[start], values[index] = values[index], values[start]
+	if k <= index-start {
+		qsort(values, start, index-1, ret, retIndex, k)
+	} else {
+		for i := start; i <= index; i++ {
+			ret[retIndex] = values[i][0]
+			retIndex++
+		}
+		if k > index-start+1 {
+			qsort(values, index+1, end, ret, retIndex, k-(index-start+1))
+		}
+	}
+}
+
+// 自己手写一下 TopK模板
+func topKFrequent(nums []int, k int) []int {
+	m := map[int]int{}
+	for _, val := range nums {
+		m[val]++
+	}
+	var q [][]int
+	for k, v := range m {
+		q = append(q, []int{k, v})
+	}
+	var res []int
+	qSort(q, &res, 0, len(q)-1, k, 0)
+	return res
+}
+
+func qSort(nums [][]int, res *[]int, l, r, k, curResIdx int) {
+	rand.Seed(time.Now().UnixNano())
+	x := rand.Int()%(r-l+1) + l
+	nums[x], nums[r] = nums[r], nums[x]
+	i, j := l-1, l
+	for ; j < r; j++ {
+		if nums[j][1] > nums[r][1] {
+			i++
+			nums[i], nums[j] = nums[j], nums[i]
+		}
+	}
+	i++
+	nums[i], nums[j] = nums[j], nums[i]
+	if k < i+1-l { // k的判断也要修改  之前第k个不用改太多
+		qSort(nums, res, l, i-1, k, curResIdx)
+	} else {
+		for _, el := range nums[l : i+1] {
+			*res = append(*res, el[0])
+		}
+		if i+1-l == k { // 已经收集满足了
+			return
+		}
+		qSort(nums, res, i+1, r, k-i-1+l, curResIdx)
+	}
 }
